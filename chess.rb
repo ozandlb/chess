@@ -157,7 +157,15 @@ class Piece
 
   def targetlegal(game, targetsquare)
 
-    if @type == :pawn     #  =========  NOTE: OPTIONS BELOW DO NOT BLOCK MOVES THAT LEAVE KING IN CHECK  ========
+    #  validate pawn movements
+    #  %%%%%%%%%%%%%% CHECK FROM TOP AND BOTTOM %%%%%%%%%%%%%%%%%%%
+
+    #  =========  NOTE: OPTIONS BELOW DO NOT BLOCK MOVES THAT LEAVE KING IN CHECK  ========
+    if @type == :pawn     
+
+      # set top or bottom
+      
+
 
       # one move straight ahead
       if targetsquare.column == @currentsquare.column && targetsquare.row == @currentsquare.row + 1 && targetsquare.currentpiece == nil
