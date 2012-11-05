@@ -11,7 +11,7 @@ class Game
 
     # initialize board with black on top
     @board = Board.new(@black, @white)
-    
+
     # initialize pieces 
     @black.setpieces(self)
     @white.setpieces(self)
@@ -43,12 +43,12 @@ class Player
 
     @pieces = Hash.new
 
-    for @j in 1..@columns do
-      for @i in 1..@rows do
-        @pieces[[@j,@i]] = Piece.new(game.board.squares[[@j,@i]], self)
+    for @i in 1..@columns do
+      for @j in 1..@rows do
+        @pieces[[@i,@j]] = Piece.new(game.board.squares[[@i,@j]], self)
       end
     end
-    
+
   end # setpieces
 
 end # class Player
@@ -72,9 +72,9 @@ class Board
 
     @squares = Hash.new
 
-    for @j in 1..@columns do
-      for @i in 1..@rows do
-        @squares[[@j,@i]] = Square.new(@i, @j)
+    for @i in 1..@columns do
+      for @j in 1..@rows do
+        @squares[[@i,@j]] = Square.new(@i, @j)
       end
     end
 
@@ -142,11 +142,25 @@ class Piece
       end
     end
   end
-  
-  
+
+
   def updatesquarestatus
     @currentsquare.currentpiece = self
   end #updatesquarestatus
+
+
+  def targetlegal(targetsquare)
+    if @type == :pawn
+      if targetsquare.column == @currentsquare.column
+        return true
+      else
+        return false
+      end #if
+    end#if
+    
+  end # target
+
+
 
 end # class Piece
 

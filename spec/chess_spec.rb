@@ -53,7 +53,7 @@ describe Square do
     before :all do
       @black = Player.new(:black, :top)
       @white = Player.new(:white, :bottom)
-      @square = Square.new(1, 1) #, @black, @white)
+      @square = Square.new(1, 1)
     end
 
     it "returns a Square object" do
@@ -65,7 +65,7 @@ describe Square do
       before :each do
         @black = Player.new(:black, :top)
         @white = Player.new(:white, :bottom)
-        @startingsquare = Square.new(1, 1) #, @black, @white)
+        @startingsquare = Square.new(1, 1) 
       end
 
       it "should be black" do
@@ -89,7 +89,7 @@ describe Piece do
     before :each do
       @black = Player.new(:black, :top)
       @white = Player.new(:white, :bottom)
-      @startingsquare = Square.new(1, 1) #, @black, @white)
+      @startingsquare = Square.new(1, 1)
       @currentsquare = @startingsquare
       @piece = Piece.new(@startingsquare, @white)
     end
@@ -102,6 +102,49 @@ describe Piece do
       @piece.movenumber.should == 0
     end
   end
+
+  describe "target one square forward" do
+
+    before do
+      @g = Game.new
+      @targetsquare = @g.board.squares[[1,3]]
+    end
+
+    it "should be legal" do
+      @g.white.pieces[[1,2]].targetlegal(@targetsquare).should == true
+    end
+
+  end #target one square forward
+
+
+  describe "target two squares forward" do
+
+    before do
+      @g = Game.new
+      @targetsquare = @g.board.squares[[1,4]]
+    end
+
+    it "should be legal" do
+      @g.white.pieces[[1,2]].targetlegal(@targetsquare).should == true
+    end
+
+  end #target two squares forward
+
+
+  describe "bad target two squares to the side" do
+
+    before do
+      @g = Game.new
+      @targetsquare = @g.board.squares[[3,3]]
+    end
+
+    it "should not be legal" do
+      @g.white.pieces[[1,2]].targetlegal(@targetsquare).should == false
+    end
+
+  end #target two squares forward
+
+
 
 end #class Piece
 
@@ -117,7 +160,7 @@ describe Move do
     before :each do
       @black = Player.new(:black, :top)
       @white = Player.new(:white, :bottom)
-      @target = Square.new(1,2) #, @black, @white)
+      @target = Square.new(1,2) 
       @move = Move.new(@target)
     end
 
