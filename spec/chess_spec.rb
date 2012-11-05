@@ -198,29 +198,6 @@ end #class Piece
 
 
 
-
-describe Move do
-
-  describe "#new" do
-
-    before :each do
-      @black = Player.new(:black, :top)
-      @white = Player.new(:white, :bottom)
-      @target = Square.new(1,2) 
-      @move = Move.new(@target)
-    end
-
-    it "returns a Move object" do
-      @move.should be_an_instance_of Move
-    end
-  end
-
-end # class Move
-
-
-
-
-
 describe Player do
 
   describe "#new" do

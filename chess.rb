@@ -16,7 +16,7 @@ class Game
     @black.setpieces(self)
     @white.setpieces(self)
 
-    # white always goes first
+    # set turn
     @whoseturn = @white
 
     @movenumber = 0
@@ -191,22 +191,26 @@ class Piece
   end # forcemove
 
 
+  def move(game, targetsquare)
+
+    if self.targetlegal(game, targetsquare) == true
+
+      @currentsquare.currentpiece = nil
+      @currentsquare = targetsquare
+      targetsquare.currentpiece = self
+
+      ##  ****  UPDATE pieces HASH with updated coordinates *****
+
+      ## ****  increase the move numbers for piece, player and game
+      @movenumber += 1
+      @player.movescount += 1
+      game.movenumber += 1
+
+    end # if
+  end # forcemove
+
+
 end # class Piece
 
-
-
-
-
-class Move
-  attr_accessor :target, :movenumber
-
-  def initialize(target)
-    @target = target		
-  end
-
-  def legal?
-  end
-
-end # class Move
 
 
