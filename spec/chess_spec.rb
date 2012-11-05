@@ -53,7 +53,7 @@ describe Square do
     before :all do
       @black = Player.new(:black, :top)
       @white = Player.new(:white, :bottom)
-      @square = Square.new(1, 1, @black, @white)
+      @square = Square.new(1, 1) #, @black, @white)
     end
 
     it "returns a Square object" do
@@ -65,7 +65,7 @@ describe Square do
       before :each do
         @black = Player.new(:black, :top)
         @white = Player.new(:white, :bottom)
-        @startingsquare = Square.new(1, 1, @black, @white)
+        @startingsquare = Square.new(1, 1) #, @black, @white)
       end
 
       it "should be black" do
@@ -89,9 +89,9 @@ describe Piece do
     before :each do
       @black = Player.new(:black, :top)
       @white = Player.new(:white, :bottom)
-      @startingsquare = Square.new(1, 1, @black, @white)
+      @startingsquare = Square.new(1, 1) #, @black, @white)
       @currentsquare = @startingsquare
-      @piece = Piece.new(@startingsquare, @currentsquare, @white)
+      @piece = Piece.new(@startingsquare, @white)
     end
 
     it "returns a Piece object" do
@@ -117,7 +117,7 @@ describe Move do
     before :each do
       @black = Player.new(:black, :top)
       @white = Player.new(:white, :bottom)
-      @target = Square.new(1,2, @black, @white)
+      @target = Square.new(1,2) #, @black, @white)
       @move = Move.new(@target)
     end
 
@@ -126,7 +126,7 @@ describe Move do
     end
   end
 
-end #class Move
+end # class Move
 
 
 
@@ -143,9 +143,9 @@ describe Player do
     it "returns a Player object" do
       @black.should be_an_instance_of Player
     end
-  end
+  end # new
 
-end #class Move
+end # class Player
 
 
 

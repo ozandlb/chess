@@ -11,6 +11,10 @@ class Game
 
     # initialize board with black on top
     @board = Board.new(@black, @white)
+    
+    # initialize pieces 
+    @black.setpieces(self)
+    @white.setpieces(self)
 
     # white always goes first
     @whoseturn = @white
@@ -31,15 +35,19 @@ class Player
     @color = color
     @movescount = 0
     @toporbottom = toporbottom
-    #self.setpieces
   end
 
-  def setpieces
-    #@pieces = Hash.new
-    
-    
-  
-    
+  def setpieces(game)
+    @columns = 8
+    @rows = 2
+
+    @pieces = Hash.new
+
+    for @j in 1..@columns do
+      for @i in 1..@rows do
+        @pieces[[@j,@i]] = Piece.new(game.board.squares[[@j,@i]], self)
+      end
+    end
     
   end # setpieces
 
@@ -66,7 +74,7 @@ class Board
 
     for @j in 1..@columns do
       for @i in 1..@rows do
-        @squares[[@j,@i]] = Square.new(@i, @j, @topplayer, @bottomplayer)
+        @squares[[@j,@i]] = Square.new(@i, @j)
       end
     end
 
@@ -81,15 +89,12 @@ end # class Board
 class Square
 
 
-  attr_accessor :column, :row, :color, :currentpiece, :topplayer, :bottomplayer
+  attr_accessor :column, :row, :color, :currentpiece
 
-  def initialize (column, row, topplayer, bottomplayer)
+  def initialize (column, row)
     @column = column
     @row = row
-    @topplayer = topplayer
-    @bottomplayer = bottomplayer
     self.setcolor
-    self.setcurrentpiece		
   end
 
 
@@ -102,16 +107,6 @@ class Square
   end # setcolor
 
 
-  def setcurrentpiece
-    if @row == 7 || @row == 8 
-      @currentpiece = Piece.new(self, self, @topplayer)
-    elsif @row == 1 || @row == 2
-      @currentpiece = Piece.new(self, self, @bottomplayer)
-    else
-      @currentpiece = nil
-    end
-  end
-
 end # class Square
 
 
@@ -120,13 +115,14 @@ end # class Square
 class Piece
   attr_accessor :startingsquare, :currentsquare, :color, :movenumber, :player, :type
 
-  def initialize(startingsquare, currentsquare, player)
+  def initialize(startingsquare, player)
     @startingsquare = startingsquare
-    @currentsquare = currentsquare
+    @currentsquare = startingsquare
     @player = player
     @color = @player.color
     self.settype
     @movenumber = 0
+    self.updatesquarestatus
   end
 
   def settype
@@ -146,6 +142,11 @@ class Piece
       end
     end
   end
+  
+  
+  def updatesquarestatus
+    @currentsquare.currentpiece = self
+  end #updatesquarestatus
 
 end # class Piece
 
