@@ -39,12 +39,18 @@ class Player
 
   def setpieces(game)
     @columns = 8
-    @rows = 2
+    if @toporbottom == :bottom
+      @rowstart = 1
+      @rowend = 2
+    elsif @toporbottom == :top
+      @rowstart = 7
+      @rowend = 8 
+    end
 
     @pieces = Hash.new
 
     for @i in 1..@columns do
-      for @j in 1..@rows do
+      for @j in @rowstart..@rowend do
         @pieces[[@i,@j]] = Piece.new(game.board.squares[[@i,@j]], self)
       end
     end

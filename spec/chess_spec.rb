@@ -186,7 +186,22 @@ describe Player do
     it "returns a Player object" do
       @black.should be_an_instance_of Player
     end
+
   end # new
+
+
+  describe "setpieces" do
+
+    before do
+      @g=Game.new
+    end
+
+    it "should be of the correct type" do
+      @g.black.pieces[[1,8]].type.should == :rook
+    end #should be of the correct type
+
+  end # setpieces
+
 
 end # class Player
 
