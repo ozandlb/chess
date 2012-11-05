@@ -158,27 +158,30 @@ class Piece
   def targetlegal(game, targetsquare)
 
     #  validate pawn movements
-    #  %%%%%%%%%%%%%% CHECK FROM TOP AND BOTTOM %%%%%%%%%%%%%%%%%%%
-
-    #  =========  NOTE: OPTIONS BELOW DO NOT BLOCK MOVES THAT LEAVE KING IN CHECK  ========
+    #  =========  NOTE: OPTIONS BELOW DO NOT CHECK FOR & BLOCK MOVES THAT LEAVE KING IN CHECK  ========
     if @type == :pawn     
 
-      # set top or bottom
-      
+      # calibrate for whether player is on top or bottom
+      if @player.toporbottom == :top
+        @rowfactor = -1
+      elsif @player.toporbottom == :bottom
+        @rowfactor = 1
+      end
 
 
       # one move straight ahead
-      if targetsquare.column == @currentsquare.column && targetsquare.row == @currentsquare.row + 1 && targetsquare.currentpiece == nil
+      if targetsquare.column == @currentsquare.column && targetsquare.row == @currentsquare.row + @rowfactor && targetsquare.currentpiece == nil
         return true
 
         # two moves ahead from starting position
-      elsif targetsquare.column == @currentsquare.column && targetsquare.row == @currentsquare.row + 2 && targetsquare.currentpiece == nil && 
-        game.board.squares[[@currentsquare.column,@currentsquare.row + 1]].currentpiece == nil 
+      elsif targetsquare.column == @currentsquare.column && targetsquare.row == @currentsquare.row + 2 * @rowfactor && 
+        targetsquare.currentpiece == nil && game.board.squares[[@currentsquare.column, @currentsquare.row + @rowfactor]].currentpiece == nil 
         return true
 
         # capture move
       elsif
-        targetsquare.column == @currentsquare.column + 1 && targetsquare.row == @currentsquare.row + 1 && targetsquare.currentpiece != nil && 
+        (targetsquare.column == @currentsquare.column + 1 || targetsquare.column == @currentsquare.column - 1) && 
+        targetsquare.row == @currentsquare.row + @rowfactor && targetsquare.currentpiece != nil && 
         targetsquare.currentpiece.color != self.color
         return true
 

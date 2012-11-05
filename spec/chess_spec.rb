@@ -103,7 +103,7 @@ describe Piece do
     end
   end
 
-  describe "target one square forward" do
+  describe "target one square forward for bottom pawn" do
 
     before do
       @g = Game.new
@@ -114,10 +114,25 @@ describe Piece do
       @g.white.pieces[[1,2]].targetlegal(@g, @targetsquare).should == true
     end
 
-  end #target one square forward
+  end #target one square forward for bottom pawn
 
 
-  describe "target two squares forward with no obstruction" do
+  describe "target one square forward for top pawn" do
+
+    before do
+      @g = Game.new
+      @targetsquare = @g.board.squares[[1,6]]
+    end
+
+    it "should be legal" do
+      @g.black.pieces[[1,7]].targetlegal(@g, @targetsquare).should == true
+    end
+
+  end #target one square forward for top pawn
+
+
+
+  describe "target two squares forward with no obstruction for bottom pawn" do
 
     before do
       @g = Game.new
@@ -128,10 +143,25 @@ describe Piece do
       @g.white.pieces[[1,2]].targetlegal(@g, @targetsquare).should == true
     end
 
-  end #target two squares forward with no obstruction
+  end #target two squares forward with no obstruction for bottom pawn
+
+
+  describe "target two squares forward with no obstruction for top pawn" do
+
+    before do
+      @g = Game.new
+      @targetsquare = @g.board.squares[[1,5]]
+    end
+
+    it "should be legal" do
+      @g.black.pieces[[1,7]].targetlegal(@g, @targetsquare).should == true
+    end
+
+  end #target two squares forward with no obstruction for top pawn
+
   
   
-  describe "target three squares forward with no obstruction" do
+  describe "target three squares forward with no obstruction for bottom pawn" do
 
     before do
       @g = Game.new
@@ -142,10 +172,28 @@ describe Piece do
       @g.white.pieces[[1,2]].targetlegal(@g, @targetsquare).should == false
     end
 
-  end #target two squares forward with no obstruction
+  end #target two squares forward with no obstruction for bottom pawn
+
+
+
+  describe "target three squares forward with no obstruction for top pawn" do
+
+    before do
+      @g = Game.new
+      @targetsquare = @g.board.squares[[1,4]]
+    end
+
+    it "should not be legal" do
+      @g.black.pieces[[1,7]].targetlegal(@g, @targetsquare).should == false
+    end
+
+  end #target two squares forward with no obstruction for top pawn
+
+
+
   
   
-  describe "target two squares forward with obstruction" do
+  describe "target two squares forward with obstruction for bottom pawn" do
 
     before do
       @g = Game.new
@@ -157,10 +205,31 @@ describe Piece do
       @g.white.pieces[[1,2]].targetlegal(@g, @targetsquare).should == false
     end
 
-  end #target two squares forward with obstruction
+  end #target two squares forward with obstruction for bottom pawn
+  
+
+
+
+  describe "target two squares forward with obstruction for top pawn" do
+
+    before do
+      @g = Game.new
+      @g.white.pieces[[1,2]].forcemove(@g.board.squares[[1,6]])
+      @targetsquare = @g.board.squares[[1,5]]
+    end
+
+    it "should not be legal" do
+      @g.black.pieces[[1,7]].targetlegal(@g, @targetsquare).should == false
+    end
+
+  end #target two squares forward with obstruction for top pawn
+
+
+
   
   
-  describe "target one squares forward for capture" do
+  
+  describe "target one square forward for capture for bottom pawn" do
 
     before do
       @g = Game.new
@@ -172,12 +241,30 @@ describe Piece do
       @g.white.pieces[[1,2]].targetlegal(@g, @targetsquare).should == true
     end
 
-  end #target two squares forward with obstruction
+  end #target two squares forward with obstruction for bottom pawn
+
+
+
+
+  describe "target one square forward for capture for top pawn" do
+
+    before do
+      @g = Game.new
+      @g.white.pieces[[2,2]].forcemove(@g.board.squares[[2,6]])
+      @targetsquare = @g.board.squares[[2,6]]
+    end
+
+    it "should be legal" do
+      @g.black.pieces[[1,7]].targetlegal(@g, @targetsquare).should == true
+    end
+
+  end #target two squares forward with obstruction for bottom pawn
+
   
   
 
 
-  describe "bad target two squares to the side" do
+  describe "bad target two squares to the side for bottom pawn" do
 
     before do
       @g = Game.new
@@ -188,7 +275,24 @@ describe Piece do
       @g.white.pieces[[1,2]].targetlegal(@g, @targetsquare).should == false
     end
 
-  end #target two squares forward
+  end #target two squares forward for bottom pawn
+
+
+
+  describe "bad target two squares to the side for top pawn" do
+
+    before do
+      @g = Game.new
+      @targetsquare = @g.board.squares[[3,5]]
+    end
+
+    it "should not be legal" do
+      @g.black.pieces[[1,7]].targetlegal(@g, @targetsquare).should == false
+    end
+
+  end #target two squares forward for top pawn
+
+
 
 
 
