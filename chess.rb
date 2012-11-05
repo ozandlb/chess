@@ -155,17 +155,40 @@ class Piece
   end #updatesquarestatus
 
 
-  def targetlegal(targetsquare)
-    if @type == :pawn
-      if targetsquare.column == @currentsquare.column
+  def targetlegal(game, targetsquare)
+
+    if @type == :pawn     #  =========  NOTE: OPTIONS BELOW DO NOT BLOCK MOVES THAT LEAVE KING IN CHECK  ========
+
+      # one move straight ahead
+      if targetsquare.column == @currentsquare.column && targetsquare.row == @currentsquare.row + 1 && targetsquare.currentpiece == nil
         return true
+
+        # two moves ahead from starting position
+      elsif targetsquare.column == @currentsquare.column && targetsquare.row == @currentsquare.row + 2 && targetsquare.currentpiece == nil && 
+        game.board.squares[[@currentsquare.column,@currentsquare.row + 1]].currentpiece == nil 
+        return true
+
+        # capture move
+      elsif
+        targetsquare.column == @currentsquare.column + 1 && targetsquare.row == @currentsquare.row + 1 && targetsquare.currentpiece != nil && 
+        targetsquare.currentpiece.color != self.color
+        return true
+
       else
         return false
-      end #if
-    end#if
-    
+
+      end #if 
+
+    end#if for pawns
+
   end # target
 
+
+  def forcemove(targetsquare)
+    @currentsquare.currentpiece = nil
+    @currentsquare = targetsquare
+    targetsquare.currentpiece = self
+  end # forcemove
 
 
 end # class Piece

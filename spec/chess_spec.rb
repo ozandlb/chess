@@ -111,13 +111,13 @@ describe Piece do
     end
 
     it "should be legal" do
-      @g.white.pieces[[1,2]].targetlegal(@targetsquare).should == true
+      @g.white.pieces[[1,2]].targetlegal(@g, @targetsquare).should == true
     end
 
   end #target one square forward
 
 
-  describe "target two squares forward" do
+  describe "target two squares forward with no obstruction" do
 
     before do
       @g = Game.new
@@ -125,10 +125,56 @@ describe Piece do
     end
 
     it "should be legal" do
-      @g.white.pieces[[1,2]].targetlegal(@targetsquare).should == true
+      @g.white.pieces[[1,2]].targetlegal(@g, @targetsquare).should == true
     end
 
-  end #target two squares forward
+  end #target two squares forward with no obstruction
+  
+  
+  describe "target three squares forward with no obstruction" do
+
+    before do
+      @g = Game.new
+      @targetsquare = @g.board.squares[[1,5]]
+    end
+
+    it "should not be legal" do
+      @g.white.pieces[[1,2]].targetlegal(@g, @targetsquare).should == false
+    end
+
+  end #target two squares forward with no obstruction
+  
+  
+  describe "target two squares forward with obstruction" do
+
+    before do
+      @g = Game.new
+      @g.black.pieces[[1,7]].forcemove(@g.board.squares[[1,3]])
+      @targetsquare = @g.board.squares[[1,4]]
+    end
+
+    it "should not be legal" do
+      @g.white.pieces[[1,2]].targetlegal(@g, @targetsquare).should == false
+    end
+
+  end #target two squares forward with obstruction
+  
+  
+  describe "target one squares forward for capture" do
+
+    before do
+      @g = Game.new
+      @g.black.pieces[[2,7]].forcemove(@g.board.squares[[2,3]])
+      @targetsquare = @g.board.squares[[2,3]]
+    end
+
+    it "should be legal" do
+      @g.white.pieces[[1,2]].targetlegal(@g, @targetsquare).should == true
+    end
+
+  end #target two squares forward with obstruction
+  
+  
 
 
   describe "bad target two squares to the side" do
@@ -139,7 +185,7 @@ describe Piece do
     end
 
     it "should not be legal" do
-      @g.white.pieces[[1,2]].targetlegal(@targetsquare).should == false
+      @g.white.pieces[[1,2]].targetlegal(@g, @targetsquare).should == false
     end
 
   end #target two squares forward
